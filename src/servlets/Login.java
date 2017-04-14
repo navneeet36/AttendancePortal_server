@@ -19,6 +19,7 @@ import database.CacheConnection;
 import database.DataManager;
 import pojo.BeanBranchInfo;
 import pojo.BeanLoginInfo;
+import utils.Constants;
 
 /**
  * Servlet implementation class Login
@@ -52,7 +53,7 @@ public class Login extends HttpServlet {
 		Map m = request.getParameterMap();
 		Set s = m.entrySet();
 		Iterator it = s.iterator();
-		String username = null,password=null;
+		String username = null,password=null;//krle ab
 		while (it.hasNext()) {
 
 			Map.Entry<String, String[]> entry = (Map.Entry<String, String[]>) it.next();
@@ -60,7 +61,7 @@ public class Login extends HttpServlet {
 			String key = entry.getKey();
 			String[] value = entry.getValue();
 			switch (key) {
-			case "username":
+			case Constants.username://acha ek baat bta krna hh,vo new method new Gson().toJson(object)ok ye jo tu us din sube bta rha tha 
 				username = value[0].toString();
 				break;
 				

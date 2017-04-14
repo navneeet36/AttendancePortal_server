@@ -87,13 +87,12 @@ public class S_listforattendance extends HttpServlet {
 		java.sql.Connection connection = CacheConnection.checkOut("create");
 		try {
 			ArrayList<BeanStudentSemInfo> list=DataManager.receiveStudents(connection, branchid,semno,subjectid);
-			int count=0;
-			if(list.size()>count)
+			if(list!=null && list.size()>0)
 			{	
 				JsonObject json = new JsonObject();
 					json.addProperty("success", "1");
 					json.addProperty("message", "student list acc to faculty");
-						json.addProperty("student list",gson.toJson(list));
+						json.addProperty("student_list",gson.toJson(list));
 					response.getWriter().write(json.toString());
 				
 			}

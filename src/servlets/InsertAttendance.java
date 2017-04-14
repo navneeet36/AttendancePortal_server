@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -13,11 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import database.CacheConnection;
 import database.DataManager;
 import pojo.BeanAttendance;
-import pojo.BeanLoginInfo;
 import utils.Constants;
 
 /**
@@ -75,16 +76,21 @@ public class InsertAttendance extends HttpServlet {
 
 		// Get a cached connection
 		java.sql.Connection connection = CacheConnection.checkOut("create");
-		boolean b = false;
 		try {
-			data=gson.fromJson(data_content, BeanAttendance.class);
-			b = DataManager.insertAttendance(connection, data);
-			if (b) {
+
+			ArrayList<BeanAttendance> array = gson.fromJson(data_content,
+					new TypeToken<ArrayList<BeanAttendance>>() {
+					}.getType());
+			boolean success = true;
+			for (BeanAttendance bean : array)
+				if (!DataManager.insertAttendance(connection, bean))
+					success = false;
+			if (success) {
 				JsonObject json = new JsonObject();
 				json.addProperty("success", "1");
 				json.addProperty("message", "account created");
 				response.getWriter().write(json.toString());
-			} else if (!b) {
+			} else  {
 				JsonObject json = new JsonObject();
 				json.addProperty("success", "0");
 				json.addProperty("message", "account not created");

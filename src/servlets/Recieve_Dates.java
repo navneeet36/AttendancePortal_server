@@ -104,7 +104,6 @@ public class Recieve_Dates extends HttpServlet {
 			json.addProperty("success", "0");
 			json.addProperty("message", "No subject list found for this faculty");
 			response.getWriter().write(json.toString());
-		
 			e.printStackTrace();
 
 			

@@ -13,15 +13,16 @@ import pojo.BeanLoginInfo;
 import pojo.BeanStudentInfo;
 import pojo.BeanStudentSemInfo;
 import pojo.BeanSubjectInfo;
+import pojo.BeanTable;
 
 public class DataManager {
 	public static boolean insertLoginInfo(Connection connection,BeanLoginInfo data)
-    {
+    { 
         String strInsert= "Insert into LoginInfo values (?,?,?,?,?,?,?,?) ";
         try
         {
         PreparedStatement ps = null;
-        ps=connection.prepareStatement(strInsert);
+        ps=connection.prepareStatement(strInsert.toLowerCase()); 
         ps.setString(1, data.getRollNo());
         ps.setString(2, data.getFacultyID());
         ps.setString(3, data.getUserName());
@@ -52,7 +53,7 @@ public class DataManager {
 	        String strInsert="Insert into BranchInfo values(?,?,?)";
 	        try
 	        {
-	        PreparedStatement ps=connection.prepareStatement(strInsert);
+	        PreparedStatement ps=connection.prepareStatement(strInsert.toLowerCase());
 	        
 	        ps.setString(1, data.getBranchID());
 	        ps.setString(2, data.getBranchName());
@@ -81,7 +82,7 @@ public class DataManager {
 	        String strSearch="select * from BranchInfo where BranchID=?";
 	        try
 	        {
-	        PreparedStatement ps=connection.prepareStatement(strSearch);
+	        PreparedStatement ps=connection.prepareStatement(strSearch.toLowerCase());
 	        
 	        ps.setString(1, BranchID);
 	       
@@ -90,8 +91,8 @@ public class DataManager {
 	       if(rs.next())
 	       {
 	           data=new BeanBranchInfo();
-	           data.setBranchName(rs.getString(2).toString());
-	           data.setTotalSem(rs.getString(3).toString());
+	           data.setBranchName(rs.getString(2));
+	           data.setTotalSem(rs.getString(3));
 	       }
 	       return data;
 	        }
@@ -109,7 +110,7 @@ public class DataManager {
 	        String strUpdate="update BranchInfo set BranchName=?,TotalSem=? where BranchID=?";
 	        try
 	        {
-	        PreparedStatement ps=connection.prepareStatement(strUpdate);
+	        PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
 	        
 	       
 	        ps.setString(1, data.getBranchName());
@@ -136,7 +137,7 @@ public class DataManager {
 	        
 	        try
 	        {
-	            PreparedStatement ps=connection.prepareStatement(strInsert);
+	            PreparedStatement ps=connection.prepareStatement(strInsert.toLowerCase());
 	            
 	           ps.setString(1, data.getFacultyID());
 	           ps.setString(2, data.getSubjectID());
@@ -163,7 +164,7 @@ public class DataManager {
 	        
 	        try
 	        {
-	            PreparedStatement ps=connection.prepareStatement(strInsert);
+	            PreparedStatement ps=connection.prepareStatement(strInsert.toLowerCase());
 	            ps.setString(1, data.getFacultyID());
 	            ps.setString(2, data.getFacultyName());
 	            ps.setString(3, data.getQualification());
@@ -197,7 +198,7 @@ public class DataManager {
 	        
 	        try
 	        {
-	            PreparedStatement ps=connection.prepareStatement(strInsert);
+	            PreparedStatement ps=connection.prepareStatement(strInsert.toLowerCase());
 	            
 	            ps.setString(1, data.getRollNo());
 	            ps.setString(2, data.getName());
@@ -230,7 +231,7 @@ public class DataManager {
 	        
 	        try
 	        {
-	        PreparedStatement ps= connection.prepareStatement(strReceive);
+	        PreparedStatement ps= connection.prepareStatement(strReceive.toLowerCase());
 	        
 	        ps.setString(1, BranchID);
 	        ps.setString(2, SemNo);
@@ -271,7 +272,7 @@ public class DataManager {
 	        String strInsert="insert into StudentAttendance values (?,?,now(),?,?,?,?)";
 	        try
 	        {
-	        PreparedStatement ps= connection.prepareStatement(strInsert);
+	        PreparedStatement ps= connection.prepareStatement(strInsert.toLowerCase());
 	        
 	        ps.setString(1,data.getRollNo());
 	        ps.setString(2,data.getFacultyID());
@@ -306,7 +307,7 @@ public class DataManager {
 	                
 	                try
 	                {
-	                PreparedStatement ps=connection.prepareStatement(strSelect);
+	                PreparedStatement ps=connection.prepareStatement(strSelect.toLowerCase());
 	                ps.setString(1, FacultyID);
 	                
 	                
@@ -318,14 +319,14 @@ public class DataManager {
 	                    {
 	                        
 	                        data=new BeanFacultyInfo();
-	                        data.setFacultyID(rs.getString(1).toString());
-	                        data.setFacultyName(rs.getString(2).toString());
-	                        data.setQualification(rs.getString(3).toString());
-	                        data.setDOB(rs.getString(4).toString());
-	                        data.setFathersName(rs.getString(5).toString());
-	                        data.setWorkingDate(rs.getString(6).toString());
-	                        data.setMothersName(rs.getString(7).toString());
-	                        data.setGender(rs.getString(8).toString());
+	                        data.setFacultyID(rs.getString(1));
+	                        data.setFacultyName(rs.getString(2));
+	                        data.setQualification(rs.getString(3));
+	                        data.setDOB(rs.getString(4));
+	                        data.setFathersName(rs.getString(5));
+	                        data.setWorkingDate(rs.getString(6));
+	                        data.setMothersName(rs.getString(7));
+	                        data.setGender(rs.getString(8));
 	                        
 	                        
 	                    }
@@ -346,7 +347,7 @@ public class DataManager {
 	                
 	                try
 	                {
-	                PreparedStatement ps=connection.prepareStatement(strSelect);
+	                PreparedStatement ps=connection.prepareStatement(strSelect.toLowerCase());
 	                ps.setString(1, FacultyID);
 	                
 	                
@@ -357,8 +358,8 @@ public class DataManager {
 	                    if(rs.next())
 	                    {
 	                        data=new BeanFacultySemInfo();
-	                        data.setFacultyID(rs.getString(1).toString());
-	                        data.setIsTeaching(rs.getString(4).toString());
+	                        data.setFacultyID(rs.getString(1));
+	                        data.setIsTeaching(rs.getString(4));
 	                        
 	                        
 	                        
@@ -382,7 +383,7 @@ public class DataManager {
 	        String strReceive="select * from dates where subjectID=? and FacultyID=?";
 	        try
 	        {
-	        PreparedStatement ps= connection.prepareStatement(strReceive);
+	        PreparedStatement ps= connection.prepareStatement(strReceive.toLowerCase());
 	        ps.setString(1, SubjectID);
 	        ps.setString(2, FacultyID);
 	        
@@ -422,7 +423,7 @@ public class DataManager {
 	        String strReceive="select * from facultyseminfo where FacultyID=?";
 	        try
 	        {
-	        PreparedStatement ps= connection.prepareStatement(strReceive);
+	        PreparedStatement ps= connection.prepareStatement(strReceive.toLowerCase());
 	       
 	        ps.setString(1, FacultyID);
 	        
@@ -462,7 +463,7 @@ public class DataManager {
 	           String strReceive="select * from SubjectInfo";
 	           try
 	           {
-	           PreparedStatement ps= connection.prepareStatement(strReceive);
+	           PreparedStatement ps= connection.prepareStatement(strReceive.toLowerCase());
 	           
 	          
 	           
@@ -502,7 +503,7 @@ public class DataManager {
 	           String strInsert="insert into FacultySemInfo(FacultyID,SubjectID,SemNo,IsTeaching,BranchID) values (?,?,?,?,?)";
 	           try
 	           {
-	           PreparedStatement ps= connection.prepareStatement(strInsert);
+	           PreparedStatement ps= connection.prepareStatement(strInsert.toLowerCase());
 	           
 	           ps.setString(1,data.getFacultyID());
 	           ps.setString(2,data.getSubjectID());
@@ -533,7 +534,7 @@ public class DataManager {
 	           
 	           try
 	           {
-	               PreparedStatement ps=connection.prepareStatement(strReceive);
+	               PreparedStatement ps=connection.prepareStatement(strReceive.toLowerCase());
 	               
 	               ps.setString(1, uname);
 	               
@@ -544,8 +545,8 @@ public class DataManager {
 	               {
 	                   data=new BeanLoginInfo();
 	                   
-	                   data.setSecurityQuestion(rs.getString(7).toString());
-	                   data.setSecurityAnswer(rs.getString(8).toString());
+	                   data.setSecurityQuestion(rs.getString(7));
+	                   data.setSecurityAnswer(rs.getString(8));
 	                 
 	               }
 	               return data;
@@ -563,7 +564,7 @@ public class DataManager {
 	           String strUpdate="update LoginInfo set Password=? where UserName=?";
 	           try
 	           {
-	           PreparedStatement ps=connection.prepareStatement(strUpdate);
+	           PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
 	           
 	          
 	           ps.setString(1, pass);
@@ -590,7 +591,7 @@ public class DataManager {
                
                try
                {
-               PreparedStatement ps=connection.prepareStatement(strSelect);
+               PreparedStatement ps=connection.prepareStatement(strSelect.toLowerCase());
                ps.setString(1, UserName);
                ps.setString(2, Password);
                
@@ -601,10 +602,10 @@ public class DataManager {
                    if(rs.next())
                    {
                        data=new BeanLoginInfo();
-                       data.setRoleName(rs.getString(5).toString());
-                       data.setEmailID(rs.getString(6).toString());
-                       data.setSecurityQuestion(rs.getString(7).toString());
-                       data.setSecurityAnswer(rs.getString(8).toString());
+                       data.setRoleName(rs.getString(5));
+                       data.setEmailID(rs.getString(6));
+                       data.setSecurityQuestion(rs.getString(7));
+                       data.setSecurityAnswer(rs.getString(8));
 
                        
                        
@@ -617,7 +618,7 @@ public class DataManager {
                        
                        else if(data.getRoleName().equalsIgnoreCase("student"))
                        {
-                           data.setRollNo(rs.getString(1).toString());
+                           data.setRollNo(rs.getString(1));
                        }
                       
                        
@@ -638,7 +639,7 @@ public class DataManager {
                
                try
                {
-               PreparedStatement ps=connection.prepareStatement(strSelect);
+               PreparedStatement ps=connection.prepareStatement(strSelect.toLowerCase());
                ps.setString(1, RollNo);
                
                
@@ -649,13 +650,13 @@ public class DataManager {
                    if(rs.next())
                    {
                        data=new BeanStudentInfo();
-                       data.setRollNo(rs.getString(1).toString());
-                       data.setName(rs.getString(2).toString());
-                       data.setFathersName(rs.getString(3).toString());
-                       data.setMothersName(rs.getString(4).toString());
-                       data.setBranchID(rs.getString(5).toString());
-                       data.setDOB(rs.getString(6).toString());
-                       data.setAdmissionDate(rs.getString(7).toString());
+                       data.setRollNo(rs.getString(1));
+                       data.setName(rs.getString(2));
+                       data.setFathersName(rs.getString(3));
+                       data.setMothersName(rs.getString(4));
+                       data.setBranchID(rs.getString(5));
+                       data.setDOB(rs.getString(6));
+                       data.setAdmissionDate(rs.getString(7));
                        
                        
                    }
@@ -679,7 +680,7 @@ public class DataManager {
                
                try
                {
-               PreparedStatement ps=connection.prepareStatement(strSelect);
+               PreparedStatement ps=connection.prepareStatement(strSelect.toLowerCase());
                ps.setString(1, RollNo);
                
                
@@ -690,10 +691,10 @@ public class DataManager {
                    if(rs.next())
                    {
                        data=new BeanStudentSemInfo();
-                       data.setRollNo(rs.getString(1).toString());
-                       data.setBranchID(rs.getString(2).toString());
-                       data.setSemNo(rs.getString(3).toString());
-                       data.setIsActive(rs.getString(4).toString());
+                       data.setRollNo(rs.getString(1));
+                       data.setBranchID(rs.getString(2));
+                       data.setSemNo(rs.getString(3));
+                       data.setIsActive(rs.getString(4));
                        
                        
                        
@@ -716,7 +717,7 @@ public class DataManager {
        String strReceive="select * from StudentSemInfo where RollNo=?";
        try
        {
-       PreparedStatement ps= connection.prepareStatement(strReceive);
+       PreparedStatement ps= connection.prepareStatement(strReceive.toLowerCase());
        ps.setString(1, RollNo);
        
       
@@ -754,7 +755,7 @@ public class DataManager {
         String strReceive="select * from SubjectInfo where BranchID=? and SemNo=?";
         try
         {
-        PreparedStatement ps= connection.prepareStatement(strReceive);
+        PreparedStatement ps= connection.prepareStatement(strReceive.toLowerCase());
         
         ps.setString(1, BranchID);
         ps.setString(2, SemNo);
@@ -795,7 +796,7 @@ public static boolean insertStudentSemInfo(Connection connection,BeanStudentSemI
         String strInsert="insert into StudentSemInfo(RollNo,BranchID,SemNo,IsActive,SubjectID) values (?,?,?,?,?)";
         try
         {
-        PreparedStatement ps= connection.prepareStatement(strInsert);
+        PreparedStatement ps= connection.prepareStatement(strInsert.toLowerCase());
         
         ps.setString(1,data.getRollNo());
         ps.setString(2,data.getBranchID());
@@ -827,7 +828,7 @@ public static boolean insertSubject(Connection connection,BeanSubjectInfo data)
     
     try
     {
-        PreparedStatement ps=connection.prepareStatement(strInsert);
+        PreparedStatement ps=connection.prepareStatement(strInsert.toLowerCase());
         ps.setString(1,data.getSubjectID());
         ps.setString(2,data.getSubjectName());
         ps.setString(3, data.getBranchID());
@@ -859,7 +860,7 @@ public static BeanSubjectInfo searchSubject(Connection connection,String Subject
     
     try
     {
-        PreparedStatement ps=connection.prepareStatement(strSearch);
+        PreparedStatement ps=connection.prepareStatement(strSearch.toLowerCase());
         ps.setString(1, SubjectID);
         
         ResultSet rs=ps.executeQuery();
@@ -867,9 +868,9 @@ public static BeanSubjectInfo searchSubject(Connection connection,String Subject
         if(rs.next())
         {
             data=new BeanSubjectInfo();
-            data.setSubjectName(rs.getString(2).toString());
-            data.setBranchID(rs.getString(3).toString());
-            data.setSemNo(rs.getString(4).toString());
+            data.setSubjectName(rs.getString(2));
+            data.setBranchID(rs.getString(3));
+            data.setSemNo(rs.getString(4));
         }
         
         return data;
@@ -889,7 +890,7 @@ public static boolean updateSubject(Connection connection,BeanSubjectInfo data)
     
     try
     {
-        PreparedStatement ps=connection.prepareStatement(strUpdate);
+        PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
         
         ps.setString(1,data.getSubjectName());
         ps.setString(2,data.getBranchID());
@@ -921,7 +922,7 @@ public  static boolean deleteSubject(Connection connection,String SubjectID)
     
     try
     {
-        PreparedStatement ps=connection.prepareStatement(strUpdate);
+        PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
         
         
         ps.setString(1, SubjectID);
@@ -950,7 +951,7 @@ public static BeanFacultyInfo searchFacultyRecord(Connection connection,String F
     String strSearch="select * from FacultyInfo where FacultyID=?";
     try
     {
-    PreparedStatement ps=connection.prepareStatement(strSearch);
+    PreparedStatement ps=connection.prepareStatement(strSearch.toLowerCase());
     
     ps.setString(1, FacultyID);
    
@@ -959,13 +960,13 @@ public static BeanFacultyInfo searchFacultyRecord(Connection connection,String F
    if(rs.next())
    {
        data=new BeanFacultyInfo();
-       data.setFacultyName(rs.getString(2).toString());
-       data.setQualification(rs.getString(3).toString());
-       data.setDOB(rs.getString(4).toString());
-       data.setFathersName(rs.getString(5).toString());
-       data.setWorkingDate(rs.getString(6).toString());
-       data.setMothersName(rs.getString(7).toString());
-       data.setGender(rs.getString(8).toString());
+       data.setFacultyName(rs.getString(2));
+       data.setQualification(rs.getString(3));
+       data.setDOB(rs.getString(4));
+       data.setFathersName(rs.getString(5));
+       data.setWorkingDate(rs.getString(6));
+       data.setMothersName(rs.getString(7));
+       data.setGender(rs.getString(8));
    }
    return data;
     }
@@ -982,7 +983,7 @@ public static boolean updateFacultyRecord(Connection connection,BeanFacultyInfo 
     String strUpdate="update FacultyInfo set FacultyName=?,Qualification=?,DOB=?,FathersName=?,WorkingDate=?,MothersName=?,Gender=? where FacultyID=?";
     try
     {
-    PreparedStatement ps=connection.prepareStatement(strUpdate);
+    PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
     
    
     ps.setString(1, data.getFacultyName());
@@ -1016,7 +1017,7 @@ public static BeanStudentInfo searchStudentRecord(Connection connection,String R
     String strSearch="select * from StudentInfo where RollNo=?";
     try
     {
-    PreparedStatement ps=connection.prepareStatement(strSearch);
+    PreparedStatement ps=connection.prepareStatement(strSearch.toLowerCase());
     
     ps.setString(1, RollNo);
    
@@ -1025,12 +1026,12 @@ public static BeanStudentInfo searchStudentRecord(Connection connection,String R
    if(rs.next())
    {
        data=new BeanStudentInfo();
-       data.setName(rs.getString(2).toString());
-       data.setFathersName(rs.getString(3).toString());
-       data.setMothersName(rs.getString(4).toString());
-       data.setBranchID(rs.getString(5).toString());
-       data.setDOB(rs.getString(6).toString());
-       data.setAdmissionDate(rs.getString(7).toString());
+       data.setName(rs.getString(2));
+       data.setFathersName(rs.getString(3));
+       data.setMothersName(rs.getString(4));
+       data.setBranchID(rs.getString(5));
+       data.setDOB(rs.getString(6));
+       data.setAdmissionDate(rs.getString(7));
    }
    return data;
     }
@@ -1050,7 +1051,7 @@ public static BeanStudentInfo searchStudentRecord(Connection connection,String R
     String strUpdate="update StudentInfo set Name=?,FathersName=?,MothersName=?,BranchID=?,DOB=?,AdmissionDate=? where RollNo=?";
     try
     {
-    PreparedStatement ps=connection.prepareStatement(strUpdate);
+    PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
     
    
     ps.setString(1, data.getName());
@@ -1081,7 +1082,7 @@ public static boolean deleteFaculty(Connection connection, String facultyid) {
     
     try
     {
-        PreparedStatement ps=connection.prepareStatement(strUpdate);
+        PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
         
         
         ps.setString(1, facultyid);
@@ -1111,7 +1112,7 @@ public static boolean deleteFacultySemInfo(Connection connection, String faculty
     
     try
     {
-        PreparedStatement ps=connection.prepareStatement(strUpdate);
+        PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
         
         
         ps.setString(1, facultyid);
@@ -1142,7 +1143,7 @@ public static boolean deleteStudent(Connection connection, String rollno) {
     
     try
     {
-        PreparedStatement ps=connection.prepareStatement(strUpdate);
+        PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
         
         
         ps.setString(1, rollno);
@@ -1171,7 +1172,7 @@ public static boolean deleteStudentSemInfo(Connection connection, String rollno)
     
     try
     {
-        PreparedStatement ps=connection.prepareStatement(strUpdate);
+        PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
         
         
         ps.setString(1, rollno);
@@ -1200,7 +1201,7 @@ public static boolean deleteBranch(Connection connection, String branchid) {
     
     try
     {
-        PreparedStatement ps=connection.prepareStatement(strUpdate);
+        PreparedStatement ps=connection.prepareStatement(strUpdate.toLowerCase());
         
         
         ps.setString(1, branchid);
@@ -1222,5 +1223,254 @@ public static boolean deleteBranch(Connection connection, String branchid) {
      return false;
      
     }
+} 
+public  static ArrayList<BeanBranchInfo> Branchlist(Connection connection)
+{
+   
+    try
+    {
+    	 String strSelect="select BranchID,BranchName,TotalSem  from BranchInfo";
+         PreparedStatement ps=connection.prepareStatement(strSelect.toLowerCase());    
+         ResultSet rs=ps.executeQuery();
+         ArrayList<BeanBranchInfo> list=null;
+         if(rs.next())
+         {
+             rs.beforeFirst();
+             list=new ArrayList<>();
+             while(rs.next())
+             {
+            	 BeanBranchInfo data=new BeanBranchInfo();
+                 
+                 data.setBranchID(rs.getString(1));
+                 data.setBranchName(rs.getString(2));
+                 data.setTotalSem(rs.getString(3));
+                 list.add(data);      
+        }  
+    }
+    return list;
+    }
+    
+    catch(Exception ex)
+    {
+    	ex.printStackTrace();
+        return null;
+    }
+   
 }
+public  static ArrayList<BeanSubjectInfo> Subjectlist(Connection connection)
+{
+   
+    try
+    {
+    	 String strSelect="select SubjectID,SubjectName,BranchID,SemNo  from SubjectInfo";
+         PreparedStatement ps=connection.prepareStatement(strSelect.toLowerCase());    
+         ResultSet rs=ps.executeQuery();
+         ArrayList<BeanSubjectInfo> list=null;
+         if(rs.next())
+         {
+             rs.beforeFirst();
+             list=new ArrayList<>();
+             while(rs.next())
+             {
+            	 BeanSubjectInfo data=new BeanSubjectInfo();
+                 
+                 data.setBranchID(rs.getString(3));
+                 data.setSubjectName(rs.getString(2));
+                 data.setSemNo(rs.getString(4));
+                 data.setSubjectID(rs.getString(1));
+                 list.add(data);      
+        }  
+    }
+    return list;
+    }
+    
+    catch(Exception ex)
+    {
+    	ex.printStackTrace();
+        return null;
+    }
+   
 }
+public  static ArrayList<BeanStudentInfo> Studentlist(Connection connection)
+{
+   
+    try
+    {
+    	 String strSelect="select RollNo,Name,BranchID  from studentinfo";
+         PreparedStatement ps=connection.prepareStatement(strSelect.toLowerCase());    
+         ResultSet rs=ps.executeQuery();
+         ArrayList<BeanStudentInfo> list=null;
+         if(rs.next())
+         {
+             rs.beforeFirst();
+             list=new ArrayList<>();
+             while(rs.next())
+             {
+            	 BeanStudentInfo data=new BeanStudentInfo();
+                 
+                 data.setBranchID(rs.getString(3));
+                 data.setName(rs.getString(2));
+                 data.setRollNo(rs.getString(1));
+                 list.add(data);      
+        }  
+    }
+    return list;
+    }
+    
+    catch(Exception ex)
+    {
+    	ex.printStackTrace();
+        return null;
+    }
+   
+}
+public  static ArrayList<BeanFacultyInfo> Facultylist(Connection connection)
+{
+   
+    try
+    {
+    	  String strSelect="select FacultyID,FacultyName from facultyinfo";
+         PreparedStatement ps=connection.prepareStatement(strSelect.toLowerCase());    
+         ResultSet rs=ps.executeQuery();
+         ArrayList<BeanFacultyInfo> list=null;
+         if(rs.next())
+         {
+             rs.beforeFirst();
+             list=new ArrayList<>();
+             while(rs.next())
+             {
+            	 BeanFacultyInfo data=new BeanFacultyInfo();
+                 
+                
+                 data.setFacultyName(rs.getString(2));
+                 data.setFacultyID(rs.getString(1));
+                 list.add(data);      
+        }  
+    }
+    return list;
+    }
+    
+    catch(Exception ex)
+    {
+    	ex.printStackTrace();
+        return null;
+    }
+   
+}
+public static ArrayList<BeanAttendance> receiveAttendance(Connection connection,String FacultyID,String SubjectID,String AttendanceDate)
+{
+    String strSelect="select RollNo,IsPresent  from studentattendance where FacultyID=? and SubjectID=? and AttendanceDate=?";
+    try
+    {
+    PreparedStatement ps= connection.prepareStatement(strSelect.toLowerCase());
+   
+    ps.setString(1, FacultyID);
+    ps.setString(2, SubjectID);
+    ps.setString(3, AttendanceDate);
+   
+    
+    ResultSet rs=ps.executeQuery();
+    
+    ArrayList<BeanAttendance> list=null;
+    if(rs.next())
+    {
+        rs.beforeFirst();
+        list=new ArrayList();
+        
+        while(rs.next())
+        {
+            BeanAttendance data=new BeanAttendance();
+            data.setRollNo(rs.getString(1));
+            data.setIsPresent(rs.getString(2));
+            list.add(data);
+        }  
+    }
+    return list;
+    }
+    
+    catch(Exception ex)
+    {
+    	ex.printStackTrace();
+        return null;
+    }
+    
+}
+public static ArrayList<BeanAttendance> receivesubjectAttendance(Connection connection,String SubjectID,String rollno)
+{
+	String strSelect="select AttendanceDate,IsPresent from studentattendance where RollNo=? and SubjectID=?";
+    try
+    {
+    PreparedStatement ps= connection.prepareStatement(strSelect.toLowerCase());
+   
+    ps.setString(1, rollno);
+    ps.setString(2, SubjectID);
+   
+     ResultSet rs=ps.executeQuery();
+    
+    ArrayList<BeanAttendance> list=null;
+    if(rs.next())
+    {
+        rs.beforeFirst();
+        list=new ArrayList();
+        
+        while(rs.next())
+        {
+            BeanAttendance data=new BeanAttendance();
+            data.setAttendanceDate(rs.getString(1));
+            data.setIsPresent(rs.getString(2));
+            list.add(data);
+        }  
+    }
+    return list;
+    }
+    
+    catch(Exception ex)
+    {
+    	ex.printStackTrace();
+        return null;
+    }
+}
+    public static ArrayList<BeanTable> receivetable2(Connection connection,String rollno)
+    {
+
+        String strSelect="SELECT distinct SUBJECTID ,(select COUNT(ISPRESENT) from studentattendance where rollno=? and subjectid = sa.subjectid )  as TotalLectures,(select COUNT(ISPRESENT) from studentattendance where rollno=? and subjectid = sa.subjectid and Ispresent='Yes')  as Present from studentattendance sa where rollno=?";
+
+        try
+        {
+        PreparedStatement ps= connection.prepareStatement(strSelect.toLowerCase());
+       
+        ps.setString(1, rollno);
+        ps.setString(2, rollno);
+        ps.setString(3, rollno);
+       
+         ResultSet rs=ps.executeQuery();
+        
+        ArrayList<BeanTable> list=null;
+        if(rs.next())
+        {
+            rs.beforeFirst();
+            list=new ArrayList();
+            
+            while(rs.next())
+            {
+                BeanTable data=new BeanTable();
+                data.setSubjectId(rs.getString(1));
+                data.setTotalLecture(rs.getString(2));
+                data.setIsPresent(rs.getString(3));
+                list.add(data);
+            }  
+        }
+        return list;
+        }
+        
+        catch(Exception ex)
+        {
+        	ex.printStackTrace();
+            return null;
+        }
+
+}
+
+}
+
+   

@@ -60,7 +60,7 @@ public class RecieveFacultyInfo extends HttpServlet {
 			String key = entry.getKey();
 			String[] value = entry.getValue();
 			switch (key) {
-			case "facultyid":
+			case "faculty_id":
 				facultyid = value[0].toString();
 				break;
 				
@@ -78,7 +78,7 @@ public class RecieveFacultyInfo extends HttpServlet {
 			{		JsonObject json = new JsonObject();
 					json.addProperty("success", "1");
 					json.addProperty("message", "faculty info");
-					json.addProperty("faculty info", gson.toJson(list));
+					json.addProperty("faculty_info", gson.toJson(list));
 				
 
 					response.getWriter().write(json.toString());

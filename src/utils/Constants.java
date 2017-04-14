@@ -3,7 +3,7 @@ package utils;
 public class Constants {
 	public static final String rollno="roll_no";
 	public static final String facultyid="faculty_id";
-	public static final String username="user_name";
+	public static final String username="username";//tune bola tha constants ki right side is same with android 
 	public static final String password="password";
 	public static final String rolename="role_name";
 	public static final String emailid="email_id";
@@ -19,5 +19,7 @@ public class Constants {
 	public static final String admissiondate="admissiondate";
 	public static final String semno="sem_no";
 	public static final String subjectid="subject_id";
+	public static final String attendancedate="attendance_date";
+	
 
 }

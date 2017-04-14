@@ -86,7 +86,7 @@ public class SubjectCombo extends HttpServlet {
 				JsonObject json = new JsonObject();
 					json.addProperty("success", "1");
 					json.addProperty("message", "subject list of faculty");
-						json.addProperty("subject list",gson.toJson(list));
+						json.addProperty("subject_list",gson.toJson(list));
 					response.getWriter().write(json.toString());
 				
 			}

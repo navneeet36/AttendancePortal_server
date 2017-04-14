@@ -78,8 +78,8 @@ public class SetScurityQuestion extends HttpServlet {
 				JsonObject json = new JsonObject();
 					json.addProperty("success", "1");
 					json.addProperty("message", "forget password");
-					json.addProperty("security question", list.getSecurityQuestion());
-					json.addProperty("security answer", list.getSecurityAnswer());
+					json.addProperty("security_question", list.getSecurityQuestion());
+					json.addProperty("security_answer", list.getSecurityAnswer());
 				
 
 					response.getWriter().write(json.toString());

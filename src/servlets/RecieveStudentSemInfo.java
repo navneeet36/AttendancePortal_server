@@ -19,6 +19,7 @@ import database.CacheConnection;
 import database.DataManager;
 import pojo.BeanLoginInfo;
 import pojo.BeanStudentSemInfo;
+import utils.Constants;
 
 /**
  * Servlet implementation class RecieveStudentSemInfo
@@ -60,7 +61,7 @@ public class RecieveStudentSemInfo extends HttpServlet {
 			String key = entry.getKey();
 			String[] value = entry.getValue();
 			switch (key) {
-			case "rollno":
+			case  Constants.rollno:
 				rollno = value[0].toString();
 				break;
 				
@@ -77,7 +78,7 @@ public class RecieveStudentSemInfo extends HttpServlet {
 			{		JsonObject json = new JsonObject();
 					json.addProperty("success", "1");
 					json.addProperty("message", "user found");
-					json.addProperty("student seminfo", gson.toJson(list));
+					json.addProperty("student_seminfo", gson.toJson(list));
 				
 
 					response.getWriter().write(json.toString());

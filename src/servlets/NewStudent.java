@@ -50,9 +50,9 @@ public class NewStudent extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		Gson gson = new Gson();
+		String data_content=null;
 		StringBuilder sb = new StringBuilder();
-		 String rollno=null,name=null,fathersname=null, mothersname=null, branchid=null,dob=null, admissiondate=null;
-		
+		 BeanStudentInfo data;
 		Map m = request.getParameterMap();
 		Set s = m.entrySet();
 		Iterator it = s.iterator();
@@ -64,28 +64,9 @@ public class NewStudent extends HttpServlet {
 			String key = entry.getKey();
 			String[] value = entry.getValue();
 			switch (key) {
-			case Constants.rollno:
-				rollno = value[0].toString();
+			case Constants.data:
+				data_content = value[0].toString();
 				break;
-			case Constants.name:
-				name = value[0].toString();
-				break;
-			case Constants.fathersname:
-				fathersname = value[0].toString();
-				break;
-			case Constants.mothersname:
-				mothersname = value[0].toString();
-				break;
-			case Constants.branchid:
-			branchid = value[0].toString();
-				break;
-			case Constants.dob:
-				dob = value[0].toString();
-				break;
-			case Constants.admissiondate:
-				admissiondate = value[0].toString();
-				break;
-				
 			
 			}
 
@@ -97,16 +78,7 @@ public class NewStudent extends HttpServlet {
 		boolean b = false;
 		try {
 			
-			BeanStudentInfo data=new  BeanStudentInfo();
-			 data.setRollNo(rollno);
-		        data.setName(name);
-		        data.setFathersName(fathersname);
-		        data.setMothersName(mothersname);
-		        data.setBranchID(branchid);
-		        data.setDOB(dob);
-		        data.setAdmissionDate(admissiondate);
-
-			
+			data=gson.fromJson(data_content, BeanStudentInfo.class);
 			b = DataManager.insertStudentInfo(connection, data);
 			if (b) {
 				JsonObject json = new JsonObject();

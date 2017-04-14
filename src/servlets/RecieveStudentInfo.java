@@ -19,6 +19,7 @@ import database.CacheConnection;
 import database.DataManager;
 import pojo.BeanLoginInfo;
 import pojo.BeanStudentInfo;
+import utils.Constants;
 
 /**
  * Servlet implementation class RecieveStudentInfo
@@ -60,10 +61,10 @@ public class RecieveStudentInfo extends HttpServlet {
 			String key = entry.getKey();
 			String[] value = entry.getValue();
 			switch (key) {
-			case "rollno":
+			case Constants.rollno:
 				rollno = value[0].toString();
 				break;
-				
+			
 		
 			}
 		}
@@ -77,7 +78,7 @@ public class RecieveStudentInfo extends HttpServlet {
 			{		JsonObject json = new JsonObject();
 					json.addProperty("success", "1");
 					json.addProperty("message", "student info");
-					json.addProperty("student info", gson.toJson(list));
+					json.addProperty("student_info", gson.toJson(list));
 				
 
 					response.getWriter().write(json.toString());
