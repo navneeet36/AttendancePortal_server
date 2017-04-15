@@ -10,6 +10,14 @@ public class BeanLoginInfo {
 	    private String SecurityQuestion;
 	    private String SecurityAnswer;
 	    private String LastLogin;
+	    private int face_registered;
+	    
+		public int getFace_registered() {
+			return face_registered;
+		}
+		public void setFace_registered(int face_registered) {
+			this.face_registered = face_registered;
+		}
 		public String getRollNo() {
 			return RollNo;
 		}

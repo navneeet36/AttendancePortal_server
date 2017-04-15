@@ -494,7 +494,7 @@ public class DataManager {
 				data.setEmailID(rs.getString(6));
 				data.setSecurityQuestion(rs.getString(7));
 				data.setSecurityAnswer(rs.getString(8));
-
+				data.setFace_registered(rs.getInt(9));
 				if (data.getRoleName().equalsIgnoreCase("faculty")) {
 					data.setFacultyID(rs.getString(2).toString());
 				}

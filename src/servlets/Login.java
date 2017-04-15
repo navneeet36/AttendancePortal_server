@@ -61,7 +61,7 @@ public class Login extends HttpServlet {
 			String key = entry.getKey();
 			String[] value = entry.getValue();
 			switch (key) {
-			case Constants.username://acha ek baat bta krna hh,vo new method new Gson().toJson(object)ok ye jo tu us din sube bta rha tha 
+			case Constants.username:
 				username = value[0].toString();
 				break;
 				
@@ -79,7 +79,7 @@ public class Login extends HttpServlet {
 			if(list!=null)
 			{		JsonObject json = new JsonObject();
 					json.addProperty("success", "1");
-					json.addProperty("message", "user found");
+					json.addProperty("message", "Invalid username/password");
 					json.addProperty("ot", gson.toJson(list));
 				
 
