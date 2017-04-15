@@ -10,7 +10,7 @@ public class BeanLoginInfo {
 	    private String SecurityQuestion;
 	    private String SecurityAnswer;
 	    private String LastLogin;
-	    private int face_registered;
+	    private int face_registered=0;
 	    
 		public int getFace_registered() {
 			return face_registered;

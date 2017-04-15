@@ -18,7 +18,7 @@ import pojo.BeanTable;
 
 public class DataManager {
 	public static boolean insertLoginInfo(Connection connection, BeanLoginInfo data) {
-		String strInsert = "Insert into LoginInfo values (?,?,?,?,?,?,?,?) ";
+		String strInsert = "Insert into LoginInfo values (?,?,?,?,?,?,?,?,?) ";
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(strInsert.toLowerCase());
@@ -30,6 +30,7 @@ public class DataManager {
 			ps.setString(6, data.getEmailID());
 			ps.setString(7, data.getSecurityQuestion());
 			ps.setString(8, data.getSecurityAnswer());
+			ps.setInt(9, data.getFace_registered());
 
 			int i = ps.executeUpdate();
 
