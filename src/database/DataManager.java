@@ -228,7 +228,7 @@ public class DataManager {
 	}
 
 	public static boolean insertAttendance(Connection connection, BeanAttendance data) {
-		String strInsert = "insert into StudentAttendance values (?,?,now(),?,?,?,?)";
+		String strInsert = "insert into StudentAttendance values (?,?,now(),?,?,?,?) ON DUPLICATE KEY UPDATE isPresent=?;";
 		try {
 			PreparedStatement ps = connection.prepareStatement(strInsert.toLowerCase());
 
@@ -239,6 +239,7 @@ public class DataManager {
 			ps.setString(4, data.getSubjectID());
 			ps.setString(5, data.getBranchID());
 			ps.setString(6, data.getSemNo());
+			ps.setString(7, data.getIsPresent());
 
 			int i = ps.executeUpdate();
 			if (i > 0) {

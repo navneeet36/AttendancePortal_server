@@ -88,12 +88,12 @@ public class InsertAttendance extends HttpServlet {
 			if (success) {
 				JsonObject json = new JsonObject();
 				json.addProperty("success", "1");
-				json.addProperty("message", "account created");
+				json.addProperty("message", "Attendance Uploaded");
 				response.getWriter().write(json.toString());
 			} else  {
 				JsonObject json = new JsonObject();
 				json.addProperty("success", "0");
-				json.addProperty("message", "account not created");
+				json.addProperty("message", "Attendance upload failed");
 				response.getWriter().write(json.toString());
 			}
 		} catch (Exception e) {
