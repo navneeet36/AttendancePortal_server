@@ -23,7 +23,6 @@ public class FaceUtils {
 		final Process p = Runtime.getRuntime().exec("python3 " + path + "generate_encoding.py " + path + fileName);
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String line = null;
-		if (p.exitValue() == 1) {
 			String s = "[";
 			try {
 				while ((line = input.readLine()) != null) {
@@ -34,14 +33,15 @@ public class FaceUtils {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			int suc;
 			try {
-				p.waitFor();
+				suc=p.waitFor();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				suc=-1;
 			}
+			if(suc!=0)s="-1";
 			return s;
-		} else
-			return "-1";
 	}
 	public static boolean matchFace(HttpServletRequest request,String encodingFromDB) throws IOException, ServletException{
 		Part filePart = request.getPart("file");

@@ -48,7 +48,6 @@ public class NewStudent extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
 		Gson gson = new Gson();
 		String data_content=null;
 		StringBuilder sb = new StringBuilder();
