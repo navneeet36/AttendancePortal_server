@@ -25,7 +25,7 @@ import utils.FaceUtils;
 /**
  * Servlet implementation class InsertAttendance
  */
-@WebServlet("/InsertAttendance")
+@WebServlet("/InsertAttendanceFace")
 public class InsertAttendanceFace extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
