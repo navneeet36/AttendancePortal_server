@@ -12,7 +12,7 @@ import javax.servlet.http.Part;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 public class FaceUtils {
-	String getEncoding(HttpServletRequest request) throws IOException, ServletException {
+	public static String getEncoding(HttpServletRequest request) throws IOException, ServletException {
 		//For registering face for the first time
 		Part filePart = request.getPart("file");
 		String fileName = filePart.getSubmittedFileName();
@@ -43,7 +43,7 @@ public class FaceUtils {
 		} else
 			return "-1";
 	}
-	boolean matchFace(HttpServletRequest request,String encodingFromDB) throws IOException, ServletException{
+	public static boolean matchFace(HttpServletRequest request,String encodingFromDB) throws IOException, ServletException{
 		Part filePart = request.getPart("file");
 		String fileName = filePart.getSubmittedFileName();
 		InputStream fileContent = filePart.getInputStream();
