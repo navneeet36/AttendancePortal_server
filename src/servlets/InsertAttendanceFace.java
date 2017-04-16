@@ -79,20 +79,22 @@ public class InsertAttendanceFace extends HttpServlet {
 			}
 
 		}
+		System.out.println(data_content);
 		CacheConnection.setVerbose(true);	
 		// Get a cached connection
 		java.sql.Connection connection = CacheConnection.checkOut("create");
 		try {
 			boolean success = false;
-
+			
 			BeanAttendance att = gson.fromJson(data_content, BeanAttendance.class);
 			String encodingFromDB = DataManager.getFaceEncoding(connection, att.getRollNo());
+
+			System.out.println(encodingFromDB);
 			if (encodingFromDB.equals("-1")) {
 				JsonObject json = new JsonObject();
 				json.addProperty("success", "1");
 				json.addProperty("message", "Face not registered for " + att.getRollNo());
 				response.getWriter().write(json.toString());
-
 			} else if (FaceUtils.matchFace(request, encodingFromDB)) {
 				if (DataManager.insertAttendance(connection, att,false))
 					success = true;

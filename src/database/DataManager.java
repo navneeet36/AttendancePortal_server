@@ -1127,7 +1127,7 @@ public class DataManager {
 
 	public static ArrayList<BeanAttendance> receiveAttendance(Connection connection, String FacultyID, String SubjectID,
 			String AttendanceDate) {
-		String strSelect = "select RollNo,IsPresent  from studentattendance where FacultyID=? and SubjectID=? and AttendanceDate=?";
+		String strSelect = "select *  from studentattendance where FacultyID=? and SubjectID=? and AttendanceDate=?";
 		try {
 			PreparedStatement ps = connection.prepareStatement(strSelect.toLowerCase());
 
@@ -1146,6 +1146,10 @@ public class DataManager {
 					BeanAttendance data = new BeanAttendance();
 					data.setRollNo(rs.getString(1));
 					data.setIsPresent(rs.getString(2));
+					data.setSemNo(rs.getString(rs.findColumn("SemNo")));
+					data.setBranchID(rs.getString(rs.findColumn("BranchID")));
+					data.setSubjectID(SubjectID);
+					data.setFacultyID(FacultyID);
 					list.add(data);
 				}
 			}
@@ -1244,11 +1248,12 @@ public class DataManager {
 		}
 	}
 	public static void addFaceEncoding(Connection connection, String rollno,String encoding) throws Exception {
-		String strSearch = "insert into face_info values (?,?)";
+		String strSearch = "insert into face_info values (?,?) ON DUPLICATE KEY UPDATE data=?";
 		try {
 			PreparedStatement ps = connection.prepareStatement(strSearch.toLowerCase());
 			ps.setString(1, rollno);
 			ps.setString(2, encoding);
+			ps.setString(3, encoding);
 			int rs = ps.executeUpdate();
 			
 		} catch (Exception ex) {

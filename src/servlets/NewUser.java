@@ -82,6 +82,7 @@ public class NewUser extends HttpServlet {
 				JsonObject json = new JsonObject();
 				json.addProperty("success", "1");
 				json.addProperty("message", "account created");
+				json.addProperty("role", data.getRoleName());
 				response.getWriter().write(json.toString());
 			} else if (!b) {
 				JsonObject json = new JsonObject();
