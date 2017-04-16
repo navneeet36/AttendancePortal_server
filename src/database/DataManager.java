@@ -114,7 +114,7 @@ public class DataManager {
 
 	public static boolean insertDates(Connection connection, BeanDates data) {
 
-		String strInsert = "Insert into dates values(now(),?,?)";
+		String strInsert = "Insert into dates values(now(),?,?)  ON DUPLICATE KEY UPDATE AttendanceDate=now()";
 
 		try {
 			PreparedStatement ps = connection.prepareStatement(strInsert.toLowerCase());
