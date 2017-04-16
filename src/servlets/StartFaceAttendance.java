@@ -94,6 +94,7 @@ public class StartFaceAttendance extends HttpServlet {
 		// Get a cached connection
 		java.sql.Connection connection = CacheConnection.checkOut("create");
 		try {
+			System.out.println(subjectid+" "+semno+" "+branchid+" "+fid+" "+date);
 			ArrayList<BeanStudentSemInfo> list = DataManager.receiveStudents(connection, branchid, semno, subjectid);
 			BeanDates b = new BeanDates();
 			b.setFacultyID(fid);

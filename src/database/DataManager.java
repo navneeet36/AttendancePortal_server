@@ -200,11 +200,10 @@ public class DataManager {
 			ps.setString(3, SubjectID);
 
 			ResultSet rs = ps.executeQuery();
-
-			ArrayList<BeanStudentSemInfo> list = null;
+			System.out.println(rs.getFetchSize());
+			ArrayList<BeanStudentSemInfo> list = new ArrayList<>();
 			if (rs.next()) {
 				rs.beforeFirst();
-				list = new ArrayList();
 
 				while (rs.next()) {
 					BeanStudentSemInfo data = new BeanStudentSemInfo();
@@ -1145,7 +1144,7 @@ public class DataManager {
 				while (rs.next()) {
 					BeanAttendance data = new BeanAttendance();
 					data.setRollNo(rs.getString(1));
-					data.setIsPresent(rs.getString(2));
+					data.setIsPresent(rs.getString(rs.findColumn("IsPresent")));
 					data.setSemNo(rs.getString(rs.findColumn("SemNo")));
 					data.setBranchID(rs.getString(rs.findColumn("BranchID")));
 					data.setSubjectID(SubjectID);

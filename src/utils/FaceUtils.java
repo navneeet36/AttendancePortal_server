@@ -23,13 +23,13 @@ public class FaceUtils {
 		final Process p = Runtime.getRuntime().exec("python3 " + path + "generate_encoding.py " + path + fileName);
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String line = null;
-			String s = "[";
+			String s = "";
 			try {
 				while ((line = input.readLine()) != null) {
 					s += ((line)) + ",";
 				}
 				s = s.substring(0, s.length() - 2);
-				s = s + "]";
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
