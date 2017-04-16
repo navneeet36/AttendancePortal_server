@@ -50,18 +50,29 @@ public class FaceUtils {
 		FileOutputStream f = new FileOutputStream("/home/arpitkh96/python/" + fileName);
 		IOUtils.copy(fileContent, f);
 		String path = "/home/arpitkh96/python/";
-		final Process p = Runtime.getRuntime().exec("python3 " + path + "encoding_matcher.py \""+encodingFromDB+"\" " + path + fileName);
+		String comm[]=new String[]{"python3", path + "encoding_matcher.py" ,encodingFromDB,path + fileName};
+		System.out.println(comm);
+		final Process p = Runtime.getRuntime().exec(comm);
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 		String line = null;
 
 			String s="";
 			try {
 				while ((line = input.readLine()) != null) {
-					s += ((line));
+					s += ((line))+"\n";
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			try {
+				while ((line = error.readLine()) != null) {
+					s += ((line))+"\n";
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println(s);
 			try {
 				p.waitFor();
 			} catch (InterruptedException e) {
