@@ -79,7 +79,7 @@ public class Login extends HttpServlet {
 			if(list!=null)
 			{		JsonObject json = new JsonObject();
 					json.addProperty("success", "1");
-					json.addProperty("message", "Invalid username/password");
+					json.addProperty("message", "Logged in");
 					json.addProperty("ot", gson.toJson(list));
 				
 
@@ -87,14 +87,14 @@ public class Login extends HttpServlet {
 				} else {
 					JsonObject json = new JsonObject();
 					json.addProperty("success", "0");
-					json.addProperty("message", "No user found");
+					json.addProperty("message", "Invalid username/password");
 					response.getWriter().write(json.toString());
 				}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			JsonObject json = new JsonObject();
 			json.addProperty("success", "0");
-			json.addProperty("message", "No user found");
+			json.addProperty("message", "Invalid username/password");
 			response.getWriter().write(json.toString());
 
 			e.printStackTrace();

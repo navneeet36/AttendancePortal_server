@@ -200,12 +200,12 @@ public class DataManager {
 			ps.setString(3, SubjectID);
 
 			ResultSet rs = ps.executeQuery();
-			System.out.println(rs.getFetchSize());
 			ArrayList<BeanStudentSemInfo> list = new ArrayList<>();
 			if (rs.next()) {
 				rs.beforeFirst();
 
 				while (rs.next()) {
+
 					BeanStudentSemInfo data = new BeanStudentSemInfo();
 
 					data.setRollNo(rs.getString(1));
