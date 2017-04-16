@@ -115,7 +115,7 @@ public class DataManager {
 	public static boolean insertDates(Connection connection, BeanDates data) {
 
 		String strInsert = "Insert into dates values(now(),?,?)  ON DUPLICATE KEY UPDATE AttendanceDate=now()";
-
+//to avoid exception
 		try {
 			PreparedStatement ps = connection.prepareStatement(strInsert.toLowerCase());
 
@@ -226,8 +226,38 @@ public class DataManager {
 		}
 
 	}
+	public static boolean insertAttendanceKeepChanges(Connection connection, BeanAttendance data) {
+		//keep original record  if already exists
+		String strInsert = "insert into StudentAttendance values (?,?,now(),?,?,?,?) ON DUPLICATE KEY UPDATE RollNo=?;";
+		try {
+			PreparedStatement ps = connection.prepareStatement(strInsert.toLowerCase());
 
-	public static boolean insertAttendance(Connection connection, BeanAttendance data) {
+			ps.setString(1, data.getRollNo());
+			ps.setString(2, data.getFacultyID());
+
+			ps.setString(3, data.getIsPresent());
+			ps.setString(4, data.getSubjectID());
+			ps.setString(5, data.getBranchID());
+			ps.setString(6, data.getSemNo());
+			ps.setString(7, data.getRollNo());
+
+			int i = ps.executeUpdate();
+			if (i > 0) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+
+	}
+
+	public static boolean insertAttendance(Connection connection, BeanAttendance data,boolean keepOriginal) {//CHange present value if already exists
+		if(keepOriginal)
+			return insertAttendanceKeepChanges(connection,data);
 		String strInsert = "insert into StudentAttendance values (?,?,now(),?,?,?,?) ON DUPLICATE KEY UPDATE isPresent=?;";
 		try {
 			PreparedStatement ps = connection.prepareStatement(strInsert.toLowerCase());
@@ -1205,7 +1235,7 @@ public class DataManager {
 			ResultSet rs = ps.executeQuery();
 			String data = "-1";
 			if (rs.next()) {
-				data = rs.getString(2);
+				data = rs.getString(rs.findColumn("data"));
 			}
 			return data;
 		} catch (Exception ex) {

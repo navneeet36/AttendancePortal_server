@@ -50,10 +50,9 @@ public class FaceUtils {
 		FileOutputStream f = new FileOutputStream("/home/arpitkh96/python/" + fileName);
 		IOUtils.copy(fileContent, f);
 		String path = "/home/arpitkh96/python/";
-		final Process p = Runtime.getRuntime().exec("python3 " + path + "encoding_matcher.py "+encodingFromDB+" " + path + fileName);
+		final Process p = Runtime.getRuntime().exec("python3 " + path + "encoding_matcher.py \""+encodingFromDB+"\" " + path + fileName);
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String line = null;
-		if (p.exitValue() == 1) {
 
 			String s="";
 			try {
@@ -69,8 +68,6 @@ public class FaceUtils {
 				e.printStackTrace();
 			}
 			return s.contains("It's a picture of me!");
-		} else
-			return false;
 		
 	}
 }

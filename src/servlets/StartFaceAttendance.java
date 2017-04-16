@@ -1,13 +1,14 @@
 package servlets;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,21 +21,21 @@ import com.google.gson.reflect.TypeToken;
 import database.CacheConnection;
 import database.DataManager;
 import pojo.BeanAttendance;
+import pojo.BeanDates;
+import pojo.BeanStudentSemInfo;
 import utils.Constants;
-import utils.FaceUtils;
 
 /**
- * Servlet implementation class InsertAttendance
+ * Servlet implementation class StartFaceAttendance
  */
-@WebServlet("/InsertAttendanceFace")
-@MultipartConfig
-public class InsertAttendanceFace extends HttpServlet {
+@WebServlet("/StartFaceAttendance")
+public class StartFaceAttendance extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public InsertAttendanceFace() {
+	public StartFaceAttendance() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -58,12 +59,11 @@ public class InsertAttendanceFace extends HttpServlet {
 		// TODO Auto-generated method stub
 		Gson gson = new Gson();
 		StringBuilder sb = new StringBuilder();
-		String data_content = null;
+		String branchid = null, semno = null, fid = null,date=null, subjectid = null;
 
 		Map m = request.getParameterMap();
 		Set s = m.entrySet();
 		Iterator it = s.iterator();
-		BeanAttendance data;
 
 		while (it.hasNext()) {
 
@@ -72,55 +72,76 @@ public class InsertAttendanceFace extends HttpServlet {
 			String key = entry.getKey();
 			String[] value = entry.getValue();
 			switch (key) {
-			case Constants.data:
-				data_content = value[0].toString();
+			case Constants.branchid:
+				branchid = value[0].toString();
 				break;
-
+			case Constants.semno:
+				semno = value[0].toString();
+				break;
+			case Constants.subjectid:
+				subjectid = value[0].toString();
+				break;
+			case "fid":
+				fid = value[0].toString();
+				break;
+			case "date":
+				date= value[0].toString();
 			}
 
 		}
-		CacheConnection.setVerbose(true);	
+		CacheConnection.setVerbose(true);
+
 		// Get a cached connection
 		java.sql.Connection connection = CacheConnection.checkOut("create");
 		try {
-			boolean success = false;
-
-			BeanAttendance att = gson.fromJson(data_content, BeanAttendance.class);
-			String encodingFromDB = DataManager.getFaceEncoding(connection, att.getRollNo());
-			if (encodingFromDB.equals("-1")) {
+			ArrayList<BeanStudentSemInfo> list = DataManager.receiveStudents(connection, branchid, semno, subjectid);
+			BeanDates b = new BeanDates();
+			b.setFacultyID(fid);
+			b.setSubjectID(subjectid);
+			ArrayList<BeanAttendance> arra = new ArrayList<BeanAttendance>();
+			for (int j = 0; j < list.size(); j++) {
+				BeanStudentSemInfo info = list.get(j);
+				BeanAttendance b1 = new BeanAttendance();
+				b1.setFacultyID(fid);
+				b1.setRollNo(info.getRollNo());
+				b1.setSubjectID(subjectid);
+				b1.setBranchID(branchid);
+				b1.setIsPresent("no");
+				b1.setSemNo(semno);
+				arra.add(b1);
+			}
+			boolean suc = DataManager.insertDates(connection, b);
+			if(suc){
+				for (BeanAttendance bean : arra)
+					if (!DataManager.insertAttendance(connection, bean,true))
+						suc = false;
+			
+			}
+			
+			if (suc) {
+				ArrayList<BeanAttendance> att=DataManager.receiveAttendance(connection, fid, subjectid, date);
 				JsonObject json = new JsonObject();
 				json.addProperty("success", "1");
-				json.addProperty("message", "Face not registered for " + att.getRollNo());
+				json.addProperty("message", "success");
+				json.addProperty("list", gson.toJson(att));
 				response.getWriter().write(json.toString());
 
-			} else if (FaceUtils.matchFace(request, encodingFromDB)) {
-				if (DataManager.insertAttendance(connection, att,false))
-					success = true;
-				if (success) {
-					JsonObject json = new JsonObject();
-					json.addProperty("success", "1");
-					json.addProperty("message", "Attendance marked for " + att.getRollNo());
-					json.addProperty("data", gson.toJson(att));
-					response.getWriter().write(json.toString());
-				} else {
-					JsonObject json = new JsonObject();
-					json.addProperty("success", "0");
-					json.addProperty("message", "Attendance not marked");
-					response.getWriter().write(json.toString());
-				}
+			} else {
+				JsonObject json = new JsonObject();
+				json.addProperty("success", "0");
+				json.addProperty("message", "failed");
+				response.getWriter().write(json.toString());
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			JsonObject json = new JsonObject();
-			json.addProperty("success", "0");
-			json.addProperty("message", "Attendance not marked");
-			response.getWriter().write(json.toString());
 			e.printStackTrace();
 
+			JsonObject json = new JsonObject();
+			json.addProperty("success", "0");
+			json.addProperty("message", "Error");
+			response.getWriter().write(json.toString());
 		}
-
 		CacheConnection.checkIn(connection);
-
 	}
 
 }

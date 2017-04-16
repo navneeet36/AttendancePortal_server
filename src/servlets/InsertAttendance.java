@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import database.CacheConnection;
 import database.DataManager;
 import pojo.BeanAttendance;
+import pojo.BeanDates;
 import utils.Constants;
 
 /**
@@ -51,7 +52,7 @@ public class InsertAttendance extends HttpServlet {
 		// TODO Auto-generated method stub
 		Gson gson = new Gson();
 		StringBuilder sb = new StringBuilder();
-		 String  data_content=null;
+		 String  data_content=null,date=null;
 		
 		Map m = request.getParameterMap();
 		Set s = m.entrySet();
@@ -68,7 +69,8 @@ public class InsertAttendance extends HttpServlet {
 			case Constants.data:
 				data_content = value[0].toString();
 				break;
-
+			case "date":
+				date=value[0].toString();
 			}
 
 		}
@@ -77,13 +79,17 @@ public class InsertAttendance extends HttpServlet {
 		// Get a cached connection
 		java.sql.Connection connection = CacheConnection.checkOut("create");
 		try {
-
+			if(date!=null){
+				BeanDates beanDate=gson.fromJson(date, BeanDates.class);
+			    if(!DataManager.insertDates(connection, beanDate))
+			    	throw new Exception();
+			}	
 			ArrayList<BeanAttendance> array = gson.fromJson(data_content,
 					new TypeToken<ArrayList<BeanAttendance>>() {
 					}.getType());
 			boolean success = true;
 			for (BeanAttendance bean : array)
-				if (!DataManager.insertAttendance(connection, bean))
+				if (!DataManager.insertAttendance(connection, bean,false))
 					success = false;
 			if (success) {
 				JsonObject json = new JsonObject();
@@ -100,7 +106,7 @@ public class InsertAttendance extends HttpServlet {
 			// TODO Auto-generated catch block
 			JsonObject json = new JsonObject();
 			json.addProperty("success", "0");
-			json.addProperty("message", "account not created");
+			json.addProperty("message", "Attendance upload failed");
 			response.getWriter().write(json.toString());
 			e.printStackTrace();
 			
